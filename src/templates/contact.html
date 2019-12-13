@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>new contact page</h1>
+{{ request.user }}
+<p>
+{{ my_text }} 
+{{ my_number }}
+{{ my_list }}
+</p>
+
+<ul>
+{% for i in my_list %}
+    <li>{{ forloop.counter}} - {{ i }} </li>
+{% endfor %}
+</ul>
+<p>weeeeee we did it</p>
+{% endblock  %} 
