@@ -11,7 +11,7 @@ def home_view(request, *args,**kwargs):
 
 
 def contact_view(request, *args, **kwargs):
-    print(request)
+    print(request.user)
     my_context = {
         "my_text" : "this is some text i want",
         "my_number" : 69,

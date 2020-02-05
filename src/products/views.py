@@ -18,13 +18,15 @@ def product_detail_view(request):
 
 def product_create_view(request):
     # render form out
-    my_form = RawProductForm(request.GET)
+    my_form = RawProductForm()
     # check request method and save data
     if request.method == "POST":
         my_form = RawProductForm(request.POST)
         if my_form.is_valid():
             # this is what we are actually sending from form after validation
             print(my_form.cleaned_data)
+            # ** turns the map into separate arguments func foo(a1, a2, a3 ...)
+            Product.objects.create(**my_form.cleaned_data)
         else:
             print(my_form.errors)
     context = {
@@ -45,7 +47,7 @@ def product_create_view(request):
     form = ProductForm(request.POST or None)
     if form.is_valid():
         form.save()
-        form = ProductForm()
+        form = ProductForm(request.POST or None)
     context = {
         'form' : form,
     }
