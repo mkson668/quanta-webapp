@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Product
 from .forms import ProductForm, RawProductForm
+from django.http import Http404
 # Create your views here.
 
 def product_detail_view(request):
@@ -16,7 +17,7 @@ def product_detail_view(request):
     return render(request, "products/product_detail.html", context)
 
 
-def product_create_view(request):
+''' def product_create_view(request):
     # render form out
     my_form = RawProductForm()
     # check request method and save data
@@ -32,7 +33,7 @@ def product_create_view(request):
     context = {
         'form' : my_form,
     }
-    return render(request, "products/product_create.html", context)
+    return render(request, "products/product_create.html", context) '''
 
 """ def product_create_view(request):
     print(request.POST)
@@ -43,12 +44,36 @@ def product_create_view(request):
     return render(request, "products/product_create.html", context)
  """
 
-""" def product_create_view(request):
-    form = ProductForm(request.POST or None)
+
+def product_create_view(request):
+    initial_data = {
+        "title" : "some title",
+    }
+    form = ProductForm(request.POST or None, initial=initial_data)
+    
     if form.is_valid():
         form.save()
         form = ProductForm(request.POST or None)
     context = {
-        'form' : form,
+        'form': form,
     }
-    return render(request, "products/product_create.html", context) """
+    return render(request, "products/product_create.html", context)
+
+def dynamic_lookup_view(request, my_id):
+    #obj = Product.objects.get(id=my_id)
+    obj = get_object_or_404(Product, id=my_id)
+
+    
+    context = {
+        'object' : obj,
+    }
+    return render(request, "products/product_detail.html", context)
+
+def product_delete_view(request, del_id):
+    obj = get_object_or_404(Product, id = del_id)
+    if request.method == 'POST':
+        obj.delete()
+    context = {
+        'object' : obj,
+    }
+    return render(request, "products/product_delete.html", context)

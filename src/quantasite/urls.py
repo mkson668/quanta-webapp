@@ -19,6 +19,8 @@ from pages.views import home_view # import your function view first
 from pages.views import contact_view
 from products.views import product_detail_view
 from products.views import product_create_view
+from products.views import dynamic_lookup_view
+from products.views import product_delete_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +28,6 @@ urlpatterns = [
     path('home/', home_view),
     path('product/', product_detail_view),
     path('create/', product_create_view),
+    path('products/<int:my_id>/', dynamic_lookup_view, name = 'product-detail'),
+    path('products/<int:del_id>/delete', product_delete_view, name = 'product-delete')
 ]
