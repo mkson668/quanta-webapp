@@ -20,6 +20,7 @@ from pages.views import contact_view
 
 urlpatterns = [
     path('product/', include('products.urls')),
+    path('article/', include('Blog.urls')),
     path('admin/', admin.site.urls),
     path('contact/', contact_view), # set this to the imports
     path('home/', home_view),

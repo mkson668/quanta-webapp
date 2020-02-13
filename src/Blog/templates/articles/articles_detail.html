@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> inside product app </h1>
+<h2> product title: </h2> 
+{{ object.title }}
+<h2> product content: </h2>
+<p>{% if object.content %}
+    {{ object.content }}
+{% else %}
+<h3> content not found </h3>
+{% endif %}</p>
+{% endblock content %}
