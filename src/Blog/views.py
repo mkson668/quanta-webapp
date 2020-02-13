@@ -1,27 +1,24 @@
 from django.shortcuts import render, get_object_or_404
-from .forms import RawArticleForm
+from .forms import ArticleModelForm
 from .models import Article
 
 from django.views.generic import (
     ListView,
     DetailView,
+    CreateView,
+    UpdateView,
 )
 
 # Create your views here.
 
 def article_create_view(request):
-    article_form = RawArticleForm(request.GET)
-    if request.method == "POST":
-        article_form = RawArticleForm(request.POST)
-        if article_form.is_valid():
-            print(article_form.cleaned_data)
-            Article.objects.create(**article_form.cleaned_data)
-        else:
-            print(article_form.errors)
-    else:
-        print('Error: request method is not POST')
+    
+    form_a = ArticleModelForm(request.POST or None)
+    if form_a.is_valid():
+        form_a.save()
+        form_a = ArticleModelForm(request.POST or None)
     context = {
-        'article_form': article_form,
+        'form': form_a,
     }
     return render(request, "articles/articles_create.html", context)
 
@@ -53,4 +50,27 @@ class ArticleClassDetailView(DetailView):
         id_ = self.kwargs.get('id')
         return get_object_or_404(Article, id = id_)
 
+class ArticleClassCreateView(CreateView):
+    template_name = 'articles/articles_create.html'
+    form_class = ArticleModelForm
+    queryset = Article.objects.all()
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+class ArticleClassUpdateView(UpdateView):
+    template_name = 'articles/articles_create.html'
+    form_class = ArticleModelForm
+    queryset = Article.objects.all()
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+        # this gets the arguemnts inside the url so <int:id>/product/<int:num>/ kwargs would have 
+        # 2 arguments id and num/ we can get it like a map
+        id_ = self.kwargs.get('id')
+        return get_object_or_404(Article, id = id_)
 
