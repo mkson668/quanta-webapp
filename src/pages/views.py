@@ -13,8 +13,8 @@ def home_view(request, *args,**kwargs):
 def contact_view(request, *args, **kwargs):
     print(request.user)
     my_context = {
-        "my_text" : "this is some text i want",
-        "my_number" : 69,
-        "my_list" : [12134, 231423, 3435246],
+        "my_text" : "BC, Vancouver",
+        "my_number" : 7788888888,
+        "my_list" : [1, 2, 3],
     }
     return render(request, "contact.html", my_context)

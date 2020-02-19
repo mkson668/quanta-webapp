@@ -14,7 +14,7 @@ urlpatterns = [
     path('<int:id>/', article_detail_view, name = 'article-detail'),
     path('list/', article_list_view, name = 'article-list'),
     path('listclass/', ArticleClassListView.as_view(), name = 'article-list-class'),
-    path('detailclass/<int:id>', ArticleClassDetailView.as_view(), name = 'article-detail-class'),
+    path('<int:id>/detailclass/', ArticleClassDetailView.as_view(), name = 'article-detail-class'),
     path('createclass/', ArticleClassCreateView.as_view(), name = 'article-create-class'),
-    path('updateclass/', ArticleClassUpdateView.as_view(), name = 'article-update-class'),
+    path('<int:id>/updateclass/', ArticleClassUpdateView.as_view(), name = 'article-update-class'),
 ]

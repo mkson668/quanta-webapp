@@ -7,6 +7,7 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
+    DeleteView,
 )
 
 # Create your views here.
@@ -55,6 +56,7 @@ class ArticleClassCreateView(CreateView):
     form_class = ArticleModelForm
     queryset = Article.objects.all()
 
+    # need this for create it uses our self defined validation
     def form_valid(self, form):
         print(form.cleaned_data)
         return super().form_valid(form)
@@ -64,13 +66,25 @@ class ArticleClassUpdateView(UpdateView):
     form_class = ArticleModelForm
     queryset = Article.objects.all()
 
-    def form_valid(self, form):
-        print(form.cleaned_data)
-        return super().form_valid(form)
-
+    # need this for update
     def get_object(self, queryset=None):
         # this gets the arguemnts inside the url so <int:id>/product/<int:num>/ kwargs would have 
         # 2 arguments id and num/ we can get it like a map
         id_ = self.kwargs.get('id')
         return get_object_or_404(Article, id = id_)
+    
+    # need this for update
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
 
+class ArticleClassDeleteView(DeleteView):
+    template_name = 'articles/articles_delete.html'
+    queryset = Article.objects.all()
+
+    # need this for delete
+    def get_object(self, queryset=None):
+        # this gets the arguemnts inside the url so <int:id>/product/<int:num>/ kwargs would have 
+        # 2 arguments id and num/ we can get it like a map
+        id_ = self.kwargs.get('id')
+        return get_object_or_404(Article, id = id_)
