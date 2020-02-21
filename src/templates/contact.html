@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>new contact page</h1>
-{{ request.user }}
-<p>
-{{ my_text }} 
-{{ my_number }}
-{{ my_list }}
-</p>
+
+<h1 class="display-4"> Contact Info </h1>
 
 <ul>
-{% for i in my_list %}
-    <li>{{ forloop.counter}} - {{ i }} </li>
-{% endfor %}
+        <p> {{my_text}} </p>
+        <p> {{my_number}} </p>
+
+        {% for i in my_list %}
+        <p> {{ i }} </p>
+    
+    {% endfor %}
 </ul>
-{% endblock  %} 
+
+
+{% endblock  %}

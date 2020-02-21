@@ -15,6 +15,6 @@ def contact_view(request, *args, **kwargs):
     my_context = {
         "my_text" : "BC, Vancouver",
         "my_number" : 7788888888,
-        "my_list" : [1, 2, 3],
+        "my_list"   : ["Canada" , "V7B 3U9"],
     }
     return render(request, "contact.html", my_context)
